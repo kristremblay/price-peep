@@ -4,6 +4,22 @@
 
 ## Build Setup
 
+Before running build, you need to get an Alphavantage API key from https://alphavantage.co/support/#api-key and add it to `nuxt.config.js` like so:
+
+```js
+{
+  // ...
+  env: {
+    alphaVantage: {
+      key: '##########'
+    }
+  }
+  // ...
+}
+```
+
+You are limited to 5 queries per minute, up to 500 per day, but you can get another key easily.
+
 ```bash
 # install dependencies
 $ npm install
@@ -34,20 +50,6 @@ When a stock symbol is queried successfully, the results are cached such that a 
 
 Logging out does not clear the stock cache.
 
-If you somehow burn the API key, you can get another one from https://alphavantage.co/support/#api-key . You are limited to 5 queries per minute, up to 500 per day. This application stores the key in `nuxt.config.js` under:
-
-```js
-{
-  // ...
-  env: {
-    alphaVantage: {
-      key: '##########'
-    }
-  }
-  // ...
-}
-```
-
 # FAQ
 
 ## How long did this take?
@@ -66,6 +68,7 @@ Life and work are busy, so I tried to find a good middleground of learning cool 
 
 I believe I did, for the most part. I have ideas on how I would make it better, including:
 
+- add the dotenv library so that .env files may be used to store credentials and remove the risk of committing API keys to version control
 - persisting the Vuex store in localstorage (vue-persist)
 - add current stock symbol to the route
 - implementing a time filter such that we don't have 100 data points in the chart and can focus on a period
