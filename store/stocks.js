@@ -30,10 +30,10 @@ export const actions = {
     commit('toggleFetchingStock')
     return new Promise((resolve, reject) => {
       const symbol = payload.symbol.toUpperCase()
-      setTimeout(() => {
+      setTimeout(async () => {
         if (!(symbol in state.cache)) {
           const endpoint = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&amp;symbol=${symbol}&amp;apikey=${process.env.alphaVantage.key}`
-          axios
+          await axios
             .get(endpoint)
             .then((res) => {
               const series = res.data['Time Series (Daily)']
