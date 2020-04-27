@@ -4,18 +4,12 @@
 
 ## Build Setup
 
-Before running build, you need to get an Alphavantage API key from https://alphavantage.co/support/#api-key and add it to `nuxt.config.js` like so:
+Before running build, you need to get an Alphavantage API key from https://alphavantage.co/support/#api-key. Once you have this key, create a .env file in your project directory by running `touch .env`.
 
-```js
-{
-  // ...
-  env: {
-    alphaVantage: {
-      key: '##########'
-    }
-  }
-  // ...
-}
+Edit `.env` and add the following:
+
+```
+ALPHAVANTAGE_API_KEY=##########
 ```
 
 You are limited to 5 queries per minute, up to 500 per day, but you can get another key easily.
