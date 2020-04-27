@@ -8,7 +8,6 @@
       :loading="isFetching"
       :rules="[rules.required, rules.stockSymbol]"
       clearable
-      autofocus
       :rounded="rounded"
       :filled="filled"
       :dense="dense"
