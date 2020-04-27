@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
 
 export default {
   mode: 'spa',
@@ -46,6 +47,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
     '@nuxtjs/pwa'
   ],
   /*
@@ -85,7 +87,7 @@ export default {
    */
   env: {
     alphaVantage: {
-      key: ''
+      key: process.env.ALPHAVANTAGE_API_KEY
     }
   },
   /*
