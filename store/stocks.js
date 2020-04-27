@@ -33,36 +33,42 @@ export const actions = {
       setTimeout(async () => {
         if (!(symbol in state.cache)) {
           const endpoint = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&amp;symbol=${symbol}&amp;apikey=${process.env.alphaVantage.key}`
-          await axios.get(endpoint).then((res) => {
-            const series = res.data['Time Series (Daily)']
+          await axios
+            .get(endpoint)
+            .then((res) => {
+              const series = res.data['Time Series (Daily)']
 
-            // For some reason Alphavantage returns a 200 even if there's an error.
-            // The generic error message is not very helpful, so lets deal with that
-            if (typeof series === 'undefined') {
-              commit('setInvalidStock', true)
-              return reject(new Error('Invalid stock symbol.'))
-            }
-
-            const stockData = Object.keys(series).map((date) => {
-              const data = series[date]
-
-              return {
-                date,
-                open: data['1. open'],
-                high: data['2. high'],
-                low: data['3. low'],
-                close: data['4. close'],
-                volume: data['5. volume']
+              // Alphavantage will not return a response other than 200
+              // so at the moment we have to do this dirty check and throw
+              // to get us to the catch block in the promise
+              if (typeof series === 'undefined') {
+                throw new TypeError('Invalid stock symbol.')
               }
-            })
 
-            commit('addStockToCache', {
-              symbol,
-              data: stockData
-            })
+              const stockData = Object.keys(series).map((date) => {
+                const data = series[date]
 
-            commit('selectStock', symbol)
-          })
+                return {
+                  date,
+                  open: data['1. open'],
+                  high: data['2. high'],
+                  low: data['3. low'],
+                  close: data['4. close'],
+                  volume: data['5. volume']
+                }
+              })
+
+              commit('addStockToCache', {
+                symbol,
+                data: stockData
+              })
+
+              commit('selectStock', symbol)
+            })
+            .catch((error) => {
+              commit('setInvalidStock', true)
+              reject(error)
+            })
         } else {
           commit('selectStock', symbol)
         }
