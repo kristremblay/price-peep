@@ -62,7 +62,6 @@ Life and work are busy, so I tried to find a good middleground of learning cool 
 
 I believe I did, for the most part. I have ideas on how I would make it better, including:
 
-- add the dotenv library so that .env files may be used to store credentials and remove the risk of committing API keys to version control
 - persisting the Vuex store in localstorage (vue-persist)
 - add current stock symbol to the route
 - implementing a time filter such that we don't have 100 data points in the chart and can focus on a period
